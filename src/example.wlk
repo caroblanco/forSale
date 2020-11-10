@@ -79,16 +79,20 @@ class Operacion{
 	method inmueble() = inmueble
 	
 	method reservar(cliente){
+		self.confirmarVenta()
 		estado.reservarPara(self,cliente)
 	}
 	
 	method concretar(cliente){
+		self.confirmarVenta()
 		estado.concretarPara(self,cliente)
 	}
 	
 	method cambiarEstado(nuevoE){
 		estado = nuevoE
 	}
+	
+	method confirmarVenta(){}
 }
 
 class Alquiler inherits Operacion{
@@ -100,7 +104,9 @@ class Alquiler inherits Operacion{
 
 class Venta inherits Operacion{
 	
-	//FALTA COMPROBAR QUE PUEDE SER VENDIDO
+	override method confirmarVenta(){
+		inmueble.puedeVenderse()
+	}
 	
 	method comision() = inmueble.valor() * inmobiliaria.porcentaje() / 100
 }
@@ -157,7 +163,6 @@ class Inmueble{
 	method valor() = zona.plus()
 	
 	method puedeVenderse(){}
-	
 }
 
 class Casa inherits Inmueble{
